@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Accept SSL Certificate</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .box {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 { color: #333; }
+        .step {
+            margin: 20px 0;
+            padding: 15px;
+            background: #e8f4f8;
+            border-left: 4px solid #2196F3;
+        }
+        .button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: #2196F3;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 18px;
+            margin: 20px 0;
+        }
+        .button:hover {
+            background: #0b7dda;
+        }
+        .success {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        .error {
+            color: #f44336;
+            font-weight: bold;
+        }
+        #status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        iframe {
+            width: 1px;
+            height: 1px;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>🚀 Airtable Block SSL Certificate Setup</h1>
+        
+        <div class="step">
+            <h2>Step 1: Accept the SSL Certificate</h2>
+            <p>Click the button below to open your local development server:</p>
+            <a href="https://localhost:9002" target="_blank" class="button">
+                Open https://localhost:9002
+            </a>
+            <p><strong>When the new tab opens:</strong></p>
+            <ul>
+                <li>You'll see a security warning</li>
+                <li>Click "Advanced" or "Show Details"</li>
+                <li>Click "Proceed to localhost" or "Visit this website"</li>
+                <li>You should see "Not found" - that's CORRECT! ✅</li>
+            </ul>
+        </div>
+
+        <div class="step">
+            <h2>Step 2: Test the Connection</h2>
+            <button onclick="testConnection()" class="button">Test Connection</button>
+            <div id="status"></div>
+        </div>
+
+        <div class="step">
+            <h2>Step 3: Connect Airtable</h2>
+            <p>Once the test passes:</p>
+            <ol>
+                <li>Go back to Airtable</li>
+                <li>In the "Edit extension" dialog, enter: <code>https://localhost:9002/</code></li>
+                <li>Click "Start editing extension"</li>
+                <li>Your extension should load! 🎉</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        function testConnection() {
+            const statusDiv = document.getElementById('status');
+            statusDiv.innerHTML = 'Testing connection...';
+            statusDiv.style.background = '#fff3cd';
+            
+            fetch('https://localhost:9002/bundle.js')
+                .then(response => {
+                    if (response.ok) {
+                        statusDiv.innerHTML = '✅ <span class="success">SUCCESS!</span> Your local server is accessible. Go to Airtable now!';
+                        statusDiv.style.background = '#d4edda';
+                    } else {
+                        statusDiv.innerHTML = '⚠️ Server responded but with an error. Status: ' + response.status;
+                        statusDiv.style.background = '#fff3cd';
+                    }
+                })
+                .catch(error => {
+                    statusDiv.innerHTML = '❌ <span class="error">FAILED</span> - You need to accept the SSL certificate first. Click the "Open https://localhost:9002" button above and accept the certificate warning.';
+                    statusDiv.style.background = '#f8d7da';
+                });
+        }
+    </script>
+</body>
+</html>
