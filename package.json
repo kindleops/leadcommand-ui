@@ -1,0 +1,16 @@
+{
+  "name": "leadcommand-ui",
+  "version": "1.0.0",
+  "description": "Elite Airtable interface for LeadCommand Chat",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "block run",
+    "build": "block release"
+  },
+  "dependencies": {
+    "@airtable/blocks": "^2.1.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}
